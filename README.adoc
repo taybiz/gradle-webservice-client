@@ -46,5 +46,6 @@ Your build system will run the test and if there's a failure it will report it a
 
 Gradle, Groovy, Spock, groovy-wslite... thank you thank you.
 And the folks who put up the following service for testing:
+
 - http://jsonplaceholder.typicode.com/
 - http://www.holidaywebservice.com/Holidays/US/Dates/USHolidayDates.asmx
