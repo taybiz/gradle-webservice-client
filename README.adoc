@@ -41,3 +41,10 @@ Two examples, one for REST and another for SOAP, are found under the 'src\test\g
 Once the build/test runs it will leave a particulary nice report dropped in the reports folder at 'build/reports/tests/index.html'.
 
 Your build system will run the test and if there's a failure it will report it as a failed build, create a nice report, and notify anyone on the failed build list. Handy, clean, and useful.
+
+== Thank You's
+
+Gradle, Groovy, Spock, groovy-wslite... thank you thank you.
+And the folks who put up the following service for testing:
+- http://jsonplaceholder.typicode.com/
+- http://www.holidaywebservice.com/Holidays/US/Dates/USHolidayDates.asmx
