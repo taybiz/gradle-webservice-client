@@ -1,0 +1,43 @@
+= gradle-webservice-client
+:author: Steve Taylor <Steve.Taylor@taybiz.com>
+
+== Overview
+This was created for periodically calling webservices. Long running processes that use BPEL or BPMN are usually kicked off by a calling system. Sometimes they can instantiate themselves based on timers and durations. But there is an edge case of a higher-level orchestration that might need to start based on time and an external actor.
+
+So I need options to kick off a remote web service or API call:
+
+- Most folks use cron. It's not good enough.
+- Another group of folks create custom code (often using Java and Quartz).
+- There's a tribe out there that uses the Microsoft Windows task scheduler.
+- Buy something very very specific.
+
+And then there's what I like to do:
+
+Use your TeamCity, Quickbuild, or Jenkins build farm as your scheduling service:
+
+- It probably already can run gradle jobs.
+- It likely has better security controls.
+- It supports source-control triggers _and_ schedule triggers;
+- And usually the timer string looks so much like cron it makes those people happy too.
+- If it's a real farm then there are > 1 build machines so there is some availablity built into the solution.
+
+== How to Use
+
+The client calls are setup with build by https://github.com/gradle/gradle[Gradle], test by https://github.com/spockframework/spock-example[Spock], and service calls using https://github.com/jwagenleitner/groovy-wslite[groovy-wslite].
+
+Ensure both the Java JDK and the Gradle are in path. Examples of what my path looks like on a Windows machine (I added a little memory to the _OPTS... ymmv).
+
+ set JAVA_HOME=C:\Java\jdk1.7.0_45
+ set GRADLE_HOME=C:\j\gradle-2.7
+ set PATH=%JAVA_HOME%\bin;%GRADLE_HOME%\bin;%PATH%
+ set GRADLE_OPTS=-Xmx1024m -XX:MaxPermSize=256m
+
+Two examples, one for REST and another for SOAP, are found under the 'src\test\groovy' folder. The base URL is a systemProperty in the build.gradle file so it can be overwritten using the '-D' argument for each environment. For example:
+
+ gradle clean test -DsoapServiceURL="http://your.production-env.com"
+ - OR -
+ gradle clean test -DrestServiceURL="http://your.production-env.com"
+
+Once the build/test runs it will leave a particulary nice report dropped in the reports folder at 'build/reports/tests/index.html'.
+
+Your build system will run the test and if there's a failure it will report it as a failed build, create a nice report, and notify anyone on the failed build list. Handy, clean, and useful.
